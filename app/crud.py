@@ -23,6 +23,9 @@ def delete_city(db: Session, city_id: int):
 
 
 def add_temperature(db: Session, city_id: int, temperature: float):
+    city = db.query(models.City).filter(models.City.id == city_id).first()
+    if not city:
+        return None
     temp = models.Temperature(city_id=city_id, temperature=temperature, date_time=datetime.utcnow())
     db.add(temp)
     db.commit()
